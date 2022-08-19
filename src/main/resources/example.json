@@ -1,0 +1,8 @@
+{
+  "@class": "zxf.jackson.model.MyAuthentication",
+  "myUser": {
+    "@class": "zxf.jackson.model.MyAuthentication$MyUser",
+    "_name": "davis",
+    "age": 1
+  }
+}
