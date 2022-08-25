@@ -26,14 +26,17 @@ public class JacksonTest {
         String json = objectMapper.writeValueAsString(createModel());
         System.out.println(json);
 
-        MyAuthentication myAuthentication = (MyAuthentication) objectMapper.readValue(json, Object.class);
-        System.out.println(myAuthentication.getName());
+        MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(json, Object.class);
+        System.out.println(myAuthentication1.getName());
 
 
         //Test json string escape for \n \t \r　\u5f20(张)
+        String value = (String) objectMapper.readValue("\"\\\\davis\\u5f20\\t\\r\\n\"", String.class);
+        System.out.println(value + ".#");
+
         File file = new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI());
-        MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(file, Object.class);
-        System.out.println(myAuthentication.getName());
+        MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
+        System.out.println(myAuthentication2.getName() + ".#");
     }
 
     private static ObjectMapper buildObjectMapper() {
@@ -63,7 +66,7 @@ public class JacksonTest {
         return objectMapper;
     }
 
-    private static MyAuthentication createModel(){
+    private static MyAuthentication createModel() {
         return new MyAuthentication(new MyAuthentication.MyUser("davis"));
     }
 
