@@ -13,15 +13,26 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import zxf.jackson.model.MyAuthentication;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 public class JacksonTest {
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         ObjectMapper objectMapper = buildObjectMapper();
+
         String json = objectMapper.writeValueAsString(createModel());
         System.out.println(json);
+
         MyAuthentication myAuthentication = (MyAuthentication) objectMapper.readValue(json, Object.class);
+        System.out.println(myAuthentication.getName());
+
+
+        //Test json string escape for \n \t \r　\u5f20(张)
+        File file = new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI());
+        MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(file, Object.class);
         System.out.println(myAuthentication.getName());
     }
 
