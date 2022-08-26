@@ -3,7 +3,6 @@ package zxf.jackson;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -31,7 +30,7 @@ public class JacksonTest {
 
 
         //Test json string escape for \n \t \r　\u5f20(张)
-        String value = (String) objectMapper.readValue("\"\\\\davis\\u5f20\\t\\r\\n\"", String.class);
+        String value = (String) objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
         System.out.println(value + ".#");
 
         File file = new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI());
@@ -67,7 +66,7 @@ public class JacksonTest {
     }
 
     private static MyAuthentication createModel() {
-        return new MyAuthentication(new MyAuthentication.MyUser("davis"));
+        return new MyAuthentication(new MyAuthentication.MyUser("davis 昝"));
     }
 
     private static class MyNamingStrategy extends PropertyNamingStrategy.PropertyNamingStrategyBase {
