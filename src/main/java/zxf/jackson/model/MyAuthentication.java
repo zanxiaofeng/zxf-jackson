@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 
 @JsonSerialize
@@ -74,6 +75,7 @@ public class MyAuthentication implements Authentication {
     public static class MyUser implements Serializable {
         private String name;
         private Integer age = 1;
+        private ZonedDateTime createTime = ZonedDateTime.now();
 
         //Add for json serialize
         public MyUser(){
@@ -97,6 +99,14 @@ public class MyAuthentication implements Authentication {
 
         public void setAge(Integer age) {
             this.age = age;
+        }
+
+        public ZonedDateTime getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(ZonedDateTime createTime) {
+            this.createTime = createTime;
         }
     }
 }

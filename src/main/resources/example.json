@@ -2,7 +2,8 @@
   "@class": "zxf.jackson.model.MyAuthentication",
   "myUser": {
     "@class": "zxf.jackson.model.MyAuthentication$MyUser",
-    "_name": "\\davis\"昝 \u5f20\b\t\f\r\n",
-    "age": 1
+    "_name": "davis 昝",
+    "age": 1,
+    "createTime": "2022-09-21T21:35:56.856+08:00"
   }
 }
