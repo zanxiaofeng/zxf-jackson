@@ -15,6 +15,7 @@ import zxf.jackson.model.MyAuthentication;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
@@ -34,6 +35,7 @@ public class JacksonTest {
         String value = (String) objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
         System.out.println(value + ".#");
 
+        // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
         File file = new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI());
         MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
         System.out.println(myAuthentication2.getName() + ".#");
