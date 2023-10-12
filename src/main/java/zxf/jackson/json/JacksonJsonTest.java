@@ -1,4 +1,4 @@
-package zxf.jackson;
+package zxf.jackson.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -11,15 +11,16 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
-import zxf.jackson.model.MyAuthentication;
+import zxf.jackson.json.model.MyAuthentication;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
-public class JacksonTest {
+public class JacksonJsonTest {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         ObjectMapper objectMapper = buildObjectMapper();
@@ -30,15 +31,18 @@ public class JacksonTest {
         MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(json, Object.class);
         System.out.println(myAuthentication1.getName());
 
-
         //Test json string escape for \n \t \r　\u5f20(张)
         String value = (String) objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
         System.out.println(value + ".#");
 
         // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
-        File file = new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI());
+        File file = new File(JacksonJsonTest.class.getClassLoader().getResource("example.json").toURI());
         MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
         System.out.println(myAuthentication2.getName() + ".#");
+
+        Map<String, Object> model = createMapModel();
+        MyAuthentication myAuthentication3 = objectMapper.convertValue(model, MyAuthentication.class);
+        System.out.println(objectMapper.writeValueAsString(myAuthentication3));
     }
 
     private static ObjectMapper buildObjectMapper() {
@@ -55,7 +59,7 @@ public class JacksonTest {
         objectMapper.setPropertyNamingStrategy(new MyNamingStrategy());
 
         // register modules
-        objectMapper.registerModules(SecurityJackson2Modules.getModules(JacksonTest.class.getClassLoader()));
+        objectMapper.registerModules(SecurityJackson2Modules.getModules(JacksonJsonTest.class.getClassLoader()));
         objectMapper.registerModule(new Jdk8Module());
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.registerModule(new ParameterNamesModule());
@@ -72,6 +76,18 @@ public class JacksonTest {
     private static MyAuthentication createModel() {
         return new MyAuthentication(new MyAuthentication.MyUser("davis 昝"));
     }
+
+    private static Map<String, Object> createMapModel() {
+        Map<String, Object> myUser = new HashMap<>();
+        myUser.put("name", "ben");
+        myUser.put("age", 20);
+        myUser.put("createTime", ZonedDateTime.now());
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("myUser", myUser);
+        return model;
+    }
+
 
     private static class MyNamingStrategy extends PropertyNamingStrategy.PropertyNamingStrategyBase {
 

@@ -1,4 +1,4 @@
-package zxf.jackson.model;
+package zxf.jackson.json.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
