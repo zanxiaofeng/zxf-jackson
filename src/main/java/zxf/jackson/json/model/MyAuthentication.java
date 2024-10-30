@@ -1,20 +1,25 @@
 package zxf.jackson.json.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 @JsonSerialize
 public class MyAuthentication implements Authentication {
     private MyUser myUser;
 
     //Add for json serialize
-    public MyAuthentication(){
+    public MyAuthentication() {
     }
 
     public MyAuthentication(MyUser myUser) {
@@ -75,10 +80,12 @@ public class MyAuthentication implements Authentication {
     public static class MyUser implements Serializable {
         private String name;
         private Integer age = 1;
-        private ZonedDateTime createTime = ZonedDateTime.now();
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "UTC")
+        private ZonedDateTime createTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("Australia/Sydney"));
+        private LocalDateTime updateTime = LocalDateTime.now();
 
         //Add for json serialize
-        public MyUser(){
+        public MyUser() {
         }
 
         public MyUser(String name) {
@@ -107,6 +114,14 @@ public class MyAuthentication implements Authentication {
 
         public void setCreateTime(ZonedDateTime createTime) {
             this.createTime = createTime;
+        }
+
+        public LocalDateTime getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(LocalDateTime updateTime) {
+            this.updateTime = updateTime;
         }
     }
 }

@@ -16,29 +16,33 @@ import zxf.jackson.json.model.MyAuthentication;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class JacksonJsonTest {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
+        System.out.println(TimeZone.getDefault());
         ObjectMapper objectMapper = buildObjectMapper();
 
         String json = objectMapper.writeValueAsString(createModel());
-        System.out.println(json);
+        System.out.println("1. " + json);
 
         MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(json, Object.class);
-        System.out.println(myAuthentication1.getName());
+        System.out.println("2. " + myAuthentication1.getName() + ", " + myAuthentication1.getMyUser().getCreateTime());
 
         //Test json string escape for \n \t \r　\u5f20(张)
-        String value = (String) objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
-        System.out.println(value + ".#");
+        String value = objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
+        System.out.println("3. " + value + ".#");
 
         // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
         File file = new File(JacksonJsonTest.class.getClassLoader().getResource("example.json").toURI());
         MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
-        System.out.println(myAuthentication2.getName() + ".#");
+        System.out.println("4. " + myAuthentication2.getName() + ".#");
 
         Map<String, Object> model = createMapModel();
         MyAuthentication myAuthentication3 = objectMapper.convertValue(model, MyAuthentication.class);
@@ -48,21 +52,24 @@ public class JacksonJsonTest {
     private static ObjectMapper buildObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
 
+        // register modules
+        objectMapper.registerModules(SecurityJackson2Modules.getModules(JacksonJsonTest.class.getClassLoader()));
+        objectMapper.registerModule(new Jdk8Module());
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(new ParameterNamesModule());
+
         // serialize fields instead of properties
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         // ignore unresolved fields (mostly 'principal')
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, false);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_WITH_CONTEXT_TIME_ZONE, true);
 
         objectMapper.setPropertyNamingStrategy(new MyNamingStrategy());
-
-        // register modules
-        objectMapper.registerModules(SecurityJackson2Modules.getModules(JacksonJsonTest.class.getClassLoader()));
-        objectMapper.registerModule(new Jdk8Module());
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.registerModule(new ParameterNamesModule());
 
         // add mixin
         objectMapper.addMixIn(HashMap.class, HashMapMixin.class);
@@ -81,7 +88,8 @@ public class JacksonJsonTest {
         Map<String, Object> myUser = new HashMap<>();
         myUser.put("name", "ben");
         myUser.put("age", 20);
-        myUser.put("createTime", ZonedDateTime.now());
+        myUser.put("createTime", ZonedDateTime.now().withZoneSameInstant(ZoneId.of("Australia/Sydney")));
+        myUser.put("updateTime", LocalDateTime.now());
 
         Map<String, Object> model = new HashMap<>();
         model.put("myUser", myUser);

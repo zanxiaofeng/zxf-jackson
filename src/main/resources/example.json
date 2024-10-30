@@ -1,9 +1,10 @@
 {
-  "@class": "zxf.jackson.model.MyAuthentication",
+  "@class": "zxf.jackson.json.model.MyAuthentication",
   "myUser": {
-    "@class": "zxf.jackson.model.MyAuthentication$MyUser",
+    "@class": "zxf.jackson.json.model.MyAuthentication$MyUser",
     "_name": "davis 昝",
     "age": 1,
-    "createTime": "2022-09-21T21:35:56.856+08:00"
+    "createTime": "2024-10-30T12:21:40.258900717+11:00",
+    "updateTime": "2024-10-30T09:21:40.260091212"
   }
 }
