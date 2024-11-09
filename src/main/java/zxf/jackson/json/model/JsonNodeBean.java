@@ -1,7 +1,9 @@
 package zxf.jackson.json.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.ToString;
 
+@ToString
 public class JsonNodeBean {
     private String name;
     private JsonNode json;
