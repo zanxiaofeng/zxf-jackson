@@ -16,7 +16,10 @@ public class JacksonJsonUnwrappedTest {
         myParameters.name = "davis";
         myParameters.values = new HashMap<>();
         myParameters.values.put("P1", "1");
-        myParameters.values.put("P2", "abc");
+        myParameters.values.put("P2", "2");
+        myParameters.pData = new PData();
+        myParameters.pData.abc = "123";
+        myParameters.pData.value = "test";
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(myParameters);
@@ -32,7 +35,16 @@ public class JacksonJsonUnwrappedTest {
 
         public String name;
 
-        @JsonUnwrapped(prefix = "aaaa")
+        @JsonUnwrapped
+        public PData pData;
+
+        @JsonUnwrapped
         public Map<String, String> values;
+    }
+
+    @ToString
+    public static class PData {
+        public String abc;
+        public String value;
     }
 }
