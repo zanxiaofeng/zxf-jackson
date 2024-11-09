@@ -19,7 +19,7 @@ public class TestJsonNode {
     };
 
     public static void main(String[] args) throws JsonProcessingException {
-        String json = "{\"name\": \"davis\", \"json\":{\"a\":1,\"b\":true,\"c\":\"str\",\"d\":null,\"e\":[\"a\",\"b\",\"c\"]}}";
+        String json = "{\"name\": \"davis\", \"json\":{\"a\":1,\"b\":true,\"c\":\"str\",\"d\":1.01,\"e\":null,\"f\":[\"a\",\"b\",\"c\"]}}";
         treeOps(json);
         beanOps(json);
         convert(json);
@@ -37,6 +37,7 @@ public class TestJsonNode {
         System.out.println("Tree Ops: obj.json.c=" + jsonNodeBean.getJson().get("c").getClass());
         System.out.println("Tree Ops: obj.json.d=" + jsonNodeBean.getJson().get("d").getClass());
         System.out.println("Tree Ops: obj.json.e=" + jsonNodeBean.getJson().get("e").getClass());
+        System.out.println("Tree Ops: obj.json.f=" + jsonNodeBean.getJson().get("f").getClass());
 
         Map<String, Object> jsonMap = OBJECT_MAPPER.treeToValue(jsonTree, MAP_TYPE);
         System.out.println("Tree Ops: " + jsonMap);
@@ -46,7 +47,8 @@ public class TestJsonNode {
         System.out.println("Tree Ops: map.json.a=" + ((Map) jsonMap.get("json")).get("a").getClass());
         System.out.println("Tree Ops: map.json.b=" + ((Map) jsonMap.get("json")).get("b").getClass());
         System.out.println("Tree Ops: map.json.c=" + ((Map) jsonMap.get("json")).get("c").getClass());
-        System.out.println("Tree Ops: map.json.e=" + ((Map) jsonMap.get("json")).get("e").getClass());
+        System.out.println("Tree Ops: map.json.d=" + ((Map) jsonMap.get("json")).get("d").getClass());
+        System.out.println("Tree Ops: map.json.f=" + ((Map) jsonMap.get("json")).get("f").getClass());
     }
 
     private static void beanOps(String json) throws JsonProcessingException {
