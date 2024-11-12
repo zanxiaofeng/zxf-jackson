@@ -35,14 +35,10 @@ public class JacksonJsonTest {
         MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(json, Object.class);
         System.out.println("2. " + myAuthentication1.getName() + ", " + myAuthentication1.getMyUser().getCreateTime());
 
-        //Test json string escape for \n \t \r　\u5f20(张)
-        String value = objectMapper.readValue("\"\\\\davis\\\"昝 \\u5f20\\b\\t\\f\\r\\n\"", String.class);
-        System.out.println("3. " + value + ".#");
-
         // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
         File file = new File(JacksonJsonTest.class.getClassLoader().getResource("example.json").toURI());
         MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
-        System.out.println("4. " + myAuthentication2.getName() + ".#");
+        System.out.println("3. " + myAuthentication2.getName() + ".#");
 
         Map<String, Object> model = createMapModel();
         MyAuthentication myAuthentication3 = objectMapper.convertValue(model, MyAuthentication.class);
