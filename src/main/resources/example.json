@@ -2,9 +2,9 @@
   "@class": "zxf.jackson.json.model.MyAuthentication",
   "myUser": {
     "@class": "zxf.jackson.json.model.MyAuthentication$MyUser",
-    "_name": "davis 昝",
+    "_name": "Davis\" \\昝-\u5F20-\b\t\f\r\n",
     "age": 1,
-    "createTime": "2024-10-30T12:21:40.258900717+11:00",
-    "updateTime": "2024-10-30T09:21:40.260091212"
+    "createTime": "2024-11-12 23:38:00.326",
+    "updateTime": "2024-11-13T07:38:00.327938577"
   }
 }

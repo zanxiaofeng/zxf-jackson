@@ -3,6 +3,7 @@ package zxf.jackson.json.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.ToString;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,11 +11,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.regex.Pattern;
 
 @JsonSerialize
+@ToString
 public class MyAuthentication implements Authentication {
     private MyUser myUser;
 
@@ -77,6 +77,7 @@ public class MyAuthentication implements Authentication {
     }
 
     @JsonSerialize
+    @ToString
     public static class MyUser implements Serializable {
         private String name;
         private Integer age = 1;

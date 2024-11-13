@@ -27,22 +27,24 @@ public class JacksonJsonTest {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         System.out.println(TimeZone.getDefault());
-        ObjectMapper objectMapper = buildObjectMapper();
+        ObjectMapper objectMapper1 = buildObjectMapper();
 
-        String json = objectMapper.writeValueAsString(createModel());
+        String json = objectMapper1.writeValueAsString(createModel());
         System.out.println("1. " + json);
 
-        MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper.readValue(json, Object.class);
+        MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper1.readValue(json, Object.class);
         System.out.println("2. " + myAuthentication1.getName() + ", " + myAuthentication1.getMyUser().getCreateTime());
 
         // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
         File file = new File(JacksonJsonTest.class.getClassLoader().getResource("example.json").toURI());
-        MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper.readValue(file, Object.class);
-        System.out.println("3. " + myAuthentication2.getName() + ".#");
+        MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper1.readValue(file, Object.class);
+        System.out.println("3. " + myAuthentication2 + ".#");
 
         Map<String, Object> model = createMapModel();
-        MyAuthentication myAuthentication3 = objectMapper.convertValue(model, MyAuthentication.class);
-        System.out.println(objectMapper.writeValueAsString(myAuthentication3));
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        objectMapper2.registerModule(new JavaTimeModule());
+        MyAuthentication myAuthentication3 = objectMapper2.convertValue(model, MyAuthentication.class);
+        System.out.println("4. " + objectMapper2.writeValueAsString(myAuthentication3) + ".#");
     }
 
     private static ObjectMapper buildObjectMapper() {
