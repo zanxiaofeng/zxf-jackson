@@ -35,8 +35,8 @@ public class JacksonJsonTest {
         MyAuthentication myAuthentication1 = (MyAuthentication) objectMapper1.readValue(json, Object.class);
         System.out.println("2. " + myAuthentication1.getName() + ", " + myAuthentication1.getMyUser().getCreateTime());
 
-        // Please note "new File(JacksonTest.class.getClassLoader().getResource("example.json").toURI())" will not work when run this program by jar
-        File file = new File(JacksonJsonTest.class.getClassLoader().getResource("example.json").toURI());
+        // Please note "new File(JacksonTest.class.getClassLoader().getResource("json/example.json").toURI())" will not work when run this program by jar
+        File file = new File(JacksonJsonTest.class.getClassLoader().getResource("json/example.json").toURI());
         MyAuthentication myAuthentication2 = (MyAuthentication) objectMapper1.readValue(file, Object.class);
         System.out.println("3. " + myAuthentication2 + ".#");
 
