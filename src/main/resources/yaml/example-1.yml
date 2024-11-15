@@ -1,6 +1,8 @@
 orderNo: A001
 date: 2019-04-17
-customerName: Customer, Joe
+customer:
+  id: id-1
+  name: Customer, Joe
 orderLines:
   - item: No. 9 Sprockets
     quantity: 12

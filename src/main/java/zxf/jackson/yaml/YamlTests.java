@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import zxf.jackson.json.JacksonJsonTest;
+import zxf.jackson.yaml.model.Customer;
 import zxf.jackson.yaml.model.Order;
 import zxf.jackson.yaml.model.OrderLine;
 
@@ -27,16 +28,17 @@ public class YamlTests {
     private static void testReadYaml() throws IOException, URISyntaxException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.registerModule(new JavaTimeModule());
-        File file = new File(JacksonJsonTest.class.getClassLoader().getResource("yaml/example.yml").toURI());
-        Order order1 = mapper.readValue(file, Order.class);
-        System.out.println("Read-1: " + order1);
 
-        Map order2 = mapper.readValue(file, Map.class);
-        System.out.println("Read-2: " + order2);
+        File file1 = new File(JacksonJsonTest.class.getClassLoader().getResource("yaml/example-1.yml").toURI());
+        Order order11 = mapper.readValue(file1, Order.class);
+        System.out.println("Read-1-1: " + order11);
+
+        Map order12 = mapper.readValue(file1, Map.class);
+        System.out.println("Read-1-2: " + order12);
     }
 
     private static void testWriteYaml() throws IOException, URISyntaxException {
-        YAMLFactory  yamlFactory = new YAMLFactory();
+        YAMLFactory yamlFactory = new YAMLFactory();
         yamlFactory.disable(WRITE_DOC_START_MARKER);
         ObjectMapper mapper = new ObjectMapper(yamlFactory);
         mapper.registerModule(new Jdk8Module());
@@ -45,12 +47,13 @@ public class YamlTests {
         Order order = new Order();
         order.setOrderNo("A001");
         order.setDate(LocalDate.now());
-        order.setCustomerName("Davis, ZAN");
-        OrderLine orderLine = new OrderLine();
-        orderLine.setItem("Item 1");
-        orderLine.setUnitPrice(BigDecimal.valueOf(23.34));
-        orderLine.setQuantity(100);
-        order.setOrderLines(Collections.singletonList(orderLine));
+        order.setCustomer(new Customer());
+        order.getCustomer().setId("id-1");
+        order.getCustomer().setName("Davis, ZAN");
+        order.setOrderLines(Collections.singletonList(new OrderLine()));
+        order.getOrderLines().get(0).setItem("Item 1");
+        order.getOrderLines().get(0).setUnitPrice(BigDecimal.valueOf(23.34));
+        order.getOrderLines().get(0).setQuantity(100);
 
         System.out.println(mapper.writeValueAsString(order));
     }

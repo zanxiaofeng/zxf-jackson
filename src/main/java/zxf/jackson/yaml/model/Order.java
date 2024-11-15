@@ -11,6 +11,6 @@ public class Order {
     private String orderNo;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    private String customerName;
+    private Customer customer;
     private List<OrderLine> orderLines;
 }
