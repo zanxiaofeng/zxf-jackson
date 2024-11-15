@@ -1,0 +1,26 @@
+Tree Ops: {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Tree Ops: {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Tree Ops: obj.json=class com.fasterxml.jackson.databind.node.ObjectNode
+Tree Ops: obj.json.a=class com.fasterxml.jackson.databind.node.IntNode
+Tree Ops: obj.json.b=class com.fasterxml.jackson.databind.node.BooleanNode
+Tree Ops: obj.json.c=class com.fasterxml.jackson.databind.node.TextNode
+Tree Ops: obj.json.d=class com.fasterxml.jackson.databind.node.DoubleNode
+Tree Ops: obj.json.e=class com.fasterxml.jackson.databind.node.NullNode
+Tree Ops: obj.json.f=class com.fasterxml.jackson.databind.node.ArrayNode
+Tree Ops: {name=davis, json={a=1, b=true, c=str, d=1.01, e=null, f=[a, b, c]}}
+Tree Ops: map=class java.util.LinkedHashMap
+Tree Ops: map.name=class java.lang.String
+Tree Ops: map.json=class java.util.LinkedHashMap
+Tree Ops: map.json.a=class java.lang.Integer
+Tree Ops: map.json.b=class java.lang.Boolean
+Tree Ops: map.json.c=class java.lang.String
+Tree Ops: map.json.d=class java.lang.Double
+Tree Ops: map.json.f=class java.util.ArrayList
+Bean Ops: {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Bean Ops: {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Tree -> Bean: JsonNodeBean(name=davis, json={"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]})
+Tree -> Map : {name=davis, json={a=1, b=true, c=str, d=1.01, e=null, f=[a, b, c]}}
+Bean -> Tree: {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Bean -> Map : {name=davis, json={a=1, b=true, c=str, d=1.01, e=null, f=[a, b, c]}}
+Map -> Tree : {"name":"davis","json":{"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]}}
+Map -> Bean : JsonNodeBean(name=davis, json={"a":1,"b":true,"c":"str","d":1.01,"e":null,"f":["a","b","c"]})

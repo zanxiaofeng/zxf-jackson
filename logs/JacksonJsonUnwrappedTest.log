@@ -1,0 +1,2 @@
+json: {"id":1,"name":"davis","abc":"123","value":"test","values":{"P1":"1","P2":"2"}}
+object: JacksonJsonUnwrappedTest.MyParameters(id=1, name=davis, pData=JacksonJsonUnwrappedTest.PData(abc=123, value=test), values={P1=1, P2=2})
