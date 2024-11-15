@@ -29,7 +29,7 @@ public class YamlTests {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.registerModule(new JavaTimeModule());
 
-        File file1 = new File(JacksonJsonTest.class.getClassLoader().getResource("yaml/example-1.yml").toURI());
+        File file1 = new File(JacksonJsonTest.class.getResource("/yaml/example-1.yml").toURI());
         Order order11 = mapper.readValue(file1, Order.class);
         System.out.println("Read-1-1: " + order11);
 
